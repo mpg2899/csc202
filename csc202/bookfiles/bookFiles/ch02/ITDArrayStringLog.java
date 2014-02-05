@@ -1,3 +1,5 @@
+package ch02;
+
 //----------------------------------------------------------------------------
 // ITDArrayStringLog.java         by Dale/Joyce/Weems                Chapter 2
 //

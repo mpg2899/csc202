@@ -1,3 +1,5 @@
+package ch02;
+
 public class Circle implements FigureGeometry
 {
   protected float radius;

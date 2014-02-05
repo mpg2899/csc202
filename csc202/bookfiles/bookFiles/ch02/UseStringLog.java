@@ -1,3 +1,5 @@
+package ch02;
+
 //----------------------------------------------------------------------------
 // UseStringLog.java           by Dale/Joyce/Weems                   Chapter 2
 //
