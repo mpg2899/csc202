@@ -1,0 +1,9 @@
+Things to do:
+1.  Design int/ab "NumericalOperations" for simple operations (add, sub, mult, div).
+
+2.  Implement abstract data type "Fraction" to implement the interface above.
+
+3.  Write driver program.  Allow input two fractions and print out the different results.
+Fraction results must be reduced.
+
+Print source code, put all on dvd, put everything into a physical folder.
