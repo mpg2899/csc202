@@ -1,3 +1,4 @@
+package ch06;
 //---------------------------------------------------------------------
 // PokerApp.java          by Dale/Joyce/Weems                 Chapter 6
 //

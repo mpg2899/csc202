@@ -1,3 +1,5 @@
+package ch06;
+
 public class UseFigs
 {
 	public static void main(String[] args)

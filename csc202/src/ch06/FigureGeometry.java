@@ -1,4 +1,6 @@
-   public interface FigureGeometry
+package ch06;
+
+public interface FigureGeometry
    {
      final float PI = 3.14f;
    

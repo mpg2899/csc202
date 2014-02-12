@@ -1,3 +1,4 @@
+package ch06;
 public class Circle implements Comparable<Circle>
 {
   protected float radius;

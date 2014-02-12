@@ -1,3 +1,4 @@
+package ch06;
 //---------------------------------------------------------------------
 // SongsApp.java          by Dale/Joyce/Weems                 Chapter 6
 //

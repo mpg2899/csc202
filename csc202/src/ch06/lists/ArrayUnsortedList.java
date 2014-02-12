@@ -24,7 +24,8 @@ public class ArrayUnsortedList<T> implements ListInterface<T>
   protected boolean found;  // true if element found, otherwise false
   protected int location;   // indicates location of element if found
 
-  public ArrayUnsortedList() 
+  @SuppressWarnings("unchecked")
+public ArrayUnsortedList() 
   {
     list = (T[]) new Object[DEFCAP];
     origCap = DEFCAP;

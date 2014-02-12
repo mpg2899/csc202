@@ -1,3 +1,5 @@
+package ch06;
+
 import ch06.lists.*;
 
 public class UseLists

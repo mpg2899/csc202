@@ -1,3 +1,5 @@
+package ch06.storing;
+
 import java.io.*;
 import support.*;
  
