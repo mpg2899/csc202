@@ -1,36 +1,44 @@
 package assignment1;
 
-public class Fraction extends FractionType<Fraction>{
+public class Fraction implements NumericalOperations{
 	private int numerator, denomenator;
+
+	public Fraction(int i, int j) {
+		// TODO Auto-generated constructor stub
+		this.numerator = i;
+		this.denomenator = j;
+	}
+
+	@Override
+	public NumericalOperations add(NumericalOperations number) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public NumericalOperations subtract(NumericalOperations number) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public NumericalOperations multiply(NumericalOperations number) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public NumericalOperations divide(NumericalOperations number) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String print() {
+		return "" + this.numerator + "/" + this.denomenator;
+	}
 	
-	public String add(Fraction number) {
-		// TODO Auto-generated method stub
-		int a1 = number.numerator + this.numerator;
-		System.out.println(a1);
-		return null;
-	}
-
-
-	public String subtract(Fraction number) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public String multiply(Fraction number) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public String divide(Fraction number) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Fraction(int numerator, int denomenator) {
-		this.numerator = numerator;
-		this.denomenator = denomenator;
+	public Fraction t2() {
+		return this;
 	}
 
 }
