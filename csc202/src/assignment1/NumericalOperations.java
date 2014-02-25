@@ -1,3 +1,12 @@
+/*
+ * Michael Gugino
+ * CSC 202
+ * Assignment 1
+ * 02/25/2014
+ * 
+ * This is the NumericalOperations interface
+ */
+
 package assignment1;
 
 public interface NumericalOperations {
