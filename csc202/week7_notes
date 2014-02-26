@@ -1,0 +1,23 @@
+Week 7 notes
+
+
+Assignment 2
+
+Write a program to read in information from a text file.
+The information should create a 2d array.
+* = start.  1 starting point.
+E = exit.  0 or more exits.
+
+Steps:
+Read in maze and make array.
+Find starting point.
+Output coordinates to individually until the exit.
+
+Stack of coordinate objects for exploring.
+Stack of coordinates for solution.
+
+Suggested object type:  int x,y; bool l,r,u,d;
+
+Must use LinkedStack for all stack structures.
+
+Due 18 Mar.
