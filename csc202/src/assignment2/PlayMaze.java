@@ -5,6 +5,9 @@
  */
 package assignment2;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.lang.Exception;
 public class PlayMaze {
 
 // Define some constant values
@@ -24,12 +27,34 @@ public class PlayMaze {
 	public static boolean valid_path_found = false;
 	public static boolean circle_path;
 	
-//  How we will parse our lines in the file.
+	//  How we will parse our lines in the file.
 	public static String separator = ",";
-	public static String tester = "Hi, hi2";
+
+	//  Path to file
+	public static String filepath = "map.txt";
 	
-// Our map variable, holds our Maze data recorded from file.
+	// Our map variable, holds our Maze data recorded from file.
 	public static String[][] myMap = new String[MAZE_HEIGHT][MAZE_WIDTH];
+	
+	// Read in map file, or use our debugging map if we cannot open the file.
+	public static void readMap() {
+		
+		try {
+		 BufferedReader br = new BufferedReader(new FileReader(filepath));
+		 String line;
+		 int count = 0;
+		   while ((line = br.readLine()) != null && count < MAZE_HEIGHT) {  
+		  
+		    String[] xline = line.split(separator);  
+		    myMap[count] = xline;
+		    count++;
+		   }
+		}
+		catch (Exception e) {
+			System.out.println("Cannot open file name.  Using default map.");
+			createMap();
+		}
+	}
 	
 	// Useful debugging function to create a simple map.
 	public static void createMap() {
@@ -121,10 +146,11 @@ public class PlayMaze {
 		// TODO Auto-generated method stub
 
 		// Read input from file and create 2D array
-		createMap();
-		String[] test1 = tester.split(separator);
-		System.out.println(test1[1]);
+		readMap();
 		
+		
+		// Debugging method for creating simple map:
+		//createMap();
 		
 		// Determine Starting position.
 		MazePath myPath = findStart();
@@ -201,7 +227,7 @@ public class PlayMaze {
 		
 		 
 		 if (solved) {
-			 System.out.println("Good job! Solution: ");
+			 System.out.println("Solution: ");
 			 System.out.println("-----");
 			 System.out.println("EXIT");
 			 System.out.println("-----");
