@@ -4,10 +4,9 @@ public class MazePath {
 
 	public int x,y; 
 	public boolean l,r,u,d;
-	public MazePath previous;
+
 	
-	MazePath (MazePath previous, int x, int y) {
-		this.previous = previous;
+	MazePath (int x, int y) {
 		this.x = x;
 		this.y = y;
 		l = false;

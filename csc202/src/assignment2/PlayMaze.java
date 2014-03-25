@@ -13,25 +13,21 @@ public class PlayMaze {
 // Define some constant values
 	public static final String START = "*";
 	public static final String EXIT = "E";
-	public static final String WALL = "0";
-	public static final String PATH = "1";
 	
-	public static final int MAZE_WIDTH = 10;
-	public static final int MAZE_HEIGHT = 10;
-	
-// Some boolean values to implement program logic.
-// These don't need to be public
-	public static boolean moves_left = true;
-	public static boolean not_solved = true;
-	public static boolean solved = false;
-	public static boolean valid_path_found = false;
-	public static boolean circle_path;
+// Some map variables that can be changed with CLI arguments.
+	public static String WALL = "0";
+	public static String PATH = "1";
+	public static int MAZE_WIDTH = 10;
+	public static int MAZE_HEIGHT = 10;
 	
 	//  How we will parse our lines in the file.
-	public static String separator = ",";
+	// Uncomment for CSV file
+	//public static String separator = ",";
+	// For non-CSV file
+	public static String separator = "(?!^)";
 
 	//  Path to file
-	public static String filepath = "map.txt";
+	public static String filepath;
 	
 	// Our map variable, holds our Maze data recorded from file.
 	public static String[][] myMap = new String[MAZE_HEIGHT][MAZE_WIDTH];
@@ -78,7 +74,7 @@ public class PlayMaze {
 		for (int i = 0; i < MAZE_HEIGHT; i++) {
 			for (int z = 0; z < MAZE_WIDTH; z++) {
 				if (myMap[i][z].equals(START)) {
-					return new MazePath(null, i, z);
+					return new MazePath(i, z);
 				}
 			}
 		}
@@ -87,17 +83,7 @@ public class PlayMaze {
 	
 	// Loop through the found paths to determine if the path
 	// is already in the list to prevent circles.
-	public static boolean pathExists(MazePath p, MazePath t) {
-		boolean exists = false;
-		while (p.previous != null) {
-			if (p.previous.x == t.x && p.previous.y == t.y) {
-				exists = true;
-				break;
-			}
-			p = p.previous;
-		}
-		return exists;
-	}
+
 	
 	// Make sure our selected direction is not a wall, and is inside our array dimensions.
 	public static boolean validatePath(int direction, MazePath p, String[][] map) {
@@ -142,9 +128,66 @@ public class PlayMaze {
 		return answerFound;
 	}
 	
+//-----------------------------------------
+// MAIN
+//-----------------------------------------
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		// Read map filename from CLI.
+		if (args.length > 0 ) {
+		filepath = args[0];
+		}
+		else {
+			System.out.println("Map filename must be provided");
+			System.exit(1);
+		}
+		
+		// Reverse role of 1/0's.
+		if (args.length == 2) {
+			if (args[1].equals("r")) {
+			System.out.println("Wall/Path switch activated");
+			WALL = "1";
+			PATH = "0";
+			}
+		}
+		
+		// Change Dimensions from standard 10x10
+		if (args.length == 4) {
+			System.out.println("Setting New Dimensions:");
+			try {
+				MAZE_WIDTH = Integer.parseInt(args[2]);
+				MAZE_HEIGHT = Integer.parseInt(args[3]);
+				if (MAZE_WIDTH <= 2 || MAZE_HEIGHT <= 2) {
+					throw null;
+				}
+			}
+			catch (Exception e) {
+				System.out.print("Arguments 3 and 4 must be integers greater than 2");
+			}
+		}
+		if (args.length ==  3) {
+			System.out.println("Setting New Dimensions:");
+			try {
+				MAZE_WIDTH = Integer.parseInt(args[1]);
+				MAZE_HEIGHT = Integer.parseInt(args[2]);
+				if (MAZE_WIDTH <= 2 || MAZE_HEIGHT <= 2) {
+					throw null;
+				}
+			}
+			catch (Exception e) {
+				System.out.print("Arguments 2 and 3 must be integers greater than 2");
+				System.exit(1);
+			}
+		}
+		// Some boolean values to implement program logic.
 
+			boolean moves_left = true;
+			boolean solved = false;
+			boolean valid_path_found = false;
+			boolean circle_path;
+		// Create our LinkedStack list.
+		LinkedStack answerList = new LinkedStack<LLNode<MazePath>>();
 		// Read input from file and create 2D array
 		readMap();
 		
@@ -154,7 +197,7 @@ public class PlayMaze {
 		
 		// Determine Starting position.
 		MazePath myPath = findStart();
-		
+		answerList.push(myPath);
 		// Determine if there was a valid starting point.
 		if (myPath == null) {
 			moves_left = false;
@@ -166,56 +209,85 @@ public class PlayMaze {
 		int nextx = 0, nexty = 0;
 		
 		
-		not_solved = true;
-		
 		// Main loop to look through maze.
 		while (moves_left && !solved) {
-	
+			// Retrieve top element from our list
+			MazePath topPath = (MazePath) answerList.top();
+			
+			
 			// Try a direction
 			valid_path_found = false;
 			
-			while (!valid_path_found && myPath.r == false) {
-				if (myPath.u == false) {
-					myPath.u = true;
-					valid_path_found = validatePath(0, myPath, myMap);
-					nextx = myPath.x - 1;
-					nexty = myPath.y;
+			while (!valid_path_found && topPath.r == false) {
+				if (topPath.u == false) {
+					topPath.u = true;
+					valid_path_found = validatePath(0, topPath, myMap);
+					nextx = topPath.x - 1;
+					nexty = topPath.y;
 				}
-				else if (myPath.d == false) {
-					myPath.d = true;
-					valid_path_found = validatePath(2, myPath, myMap);
-					nextx = myPath.x + 1;
-					nexty = myPath.y;
+				else if (topPath.d == false) {
+					topPath.d = true;
+					valid_path_found = validatePath(2, topPath, myMap);
+					nextx = topPath.x + 1;
+					nexty = topPath.y;
 				}
-				else if (myPath.l == false) {
-					myPath.l = true;
-					valid_path_found = validatePath(1, myPath, myMap);
-					nextx = myPath.x;
-					nexty = myPath.y - 1;
+				else if (topPath.l == false) {
+					topPath.l = true;
+					valid_path_found = validatePath(1, topPath, myMap);
+					nextx = topPath.x;
+					nexty = topPath.y - 1;
 				}
-				else if (myPath.r == false) {
-					myPath.r = true;
-					valid_path_found = validatePath(3, myPath, myMap);
-					nextx = myPath.x;
-					nexty = myPath.y + 1;
+				else if (topPath.r == false) {
+					topPath.r = true;
+					valid_path_found = validatePath(3, topPath, myMap);
+					nextx = topPath.x;
+					nexty = topPath.y + 1;
 				}
 			}
 			
 			if (valid_path_found) {
-				tempPath = new MazePath(myPath, nextx, nexty);
+				circle_path = false;
+				// Create a temporary path object using our new valid x and y.
+				// This will be compared to all path objects in answerList
+				// to determine if we're going in a circle, which isn't allowed.
+				tempPath = new MazePath(nextx, nexty);
+				
+				// Create a new list to store our objects while popping the answerList.
+				LinkedStack copyList = new LinkedStack<LLNode<MazePath>>();
 				// Check for existing path
-				circle_path = pathExists(myPath, tempPath);
+				MazePath p;
+				while (!answerList.isEmpty()) {
+					p = (MazePath) answerList.top();
+					copyList.push(p);
+					if (p.x == tempPath.x && p.y == tempPath.y) {
+						circle_path = true;
+					}
+					answerList.pop();
+				}
+				
+				// Let's put the elements back into answerList.
+				while (!copyList.isEmpty()) {
+					p = (MazePath) copyList.top();
+					answerList.push(p);
+					copyList.pop();
+				}
+				
+				// The newly discovered path tile is valid
+				// and does not exist in the answerList.
+				// We add it to stack with push().
 				if (!circle_path) {
-					myPath = tempPath;
-				// Check for answer
-					solved = checkForAnswer(myMap, myPath.x, myPath.y);
+					answerList.push(tempPath);
+				// Check for EXIT
+					solved = checkForAnswer(myMap, tempPath.x, tempPath.y);
 				}
 			}
-			else if (myPath.previous == null) {
-				moves_left = false;
-			}
+
 			else {
-				myPath = myPath.previous;
+				//myPath = myPath.previous;
+				answerList.pop();
+				if (answerList.isEmpty()) {
+					moves_left = false;
+				}
 			}
 			
 		}
@@ -227,17 +299,28 @@ public class PlayMaze {
 		
 		 
 		 if (solved) {
+			 //Format the output
 			 System.out.println("Solution: ");
 			 System.out.println("-----");
-			 System.out.println("EXIT");
-			 System.out.println("-----");
-			 while (myPath.previous != null) {
-				System.out.println(myPath.x + ", " + myPath.y);
-				myPath = myPath.previous;
-			 }
-			 System.out.println(myPath.x + ", " + myPath.y);
-			 System.out.println("-----");
 			 System.out.println("Start");
+			 System.out.println("-----");
+			 
+			 // We're going to copy the list into a reverse list for output.
+			 LinkedStack copyList2 = new LinkedStack<LLNode<MazePath>>();
+			 while (!answerList.isEmpty()) {
+				MazePath answerPath = (MazePath) answerList.top();
+				copyList2.push(answerPath);
+				//System.out.println(answerPath.x + ", " + answerPath.y);
+				answerList.pop();
+			 }
+			 // Pop copyList2 to get our output.
+			 while (!copyList2.isEmpty()) {
+				MazePath answerPath2 = (MazePath) copyList2.top();
+				System.out.println(answerPath2.x + ", " + answerPath2.y);
+				copyList2.pop();
+			 }
+			 System.out.println("-----");
+			 System.out.println("END");
 			 System.out.println("-----");
 		 }
 	}
