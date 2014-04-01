@@ -25,6 +25,7 @@ What to do:
   When to use:
     New node is in the r.s.t of the left child (B)
     of the nearest ancestor (A) with b.f. of +2
+    C is B's affected child.
     
   What to do:
     Set B's right to C's left.
@@ -37,6 +38,7 @@ What to do:
   When to use:
     New node in the l.s.t. of the right child (B)
     of the nearest ancestor (A) with b.f. of -2
+    C is B's affected child.
     
   What to do:
     Set B's left to C's right.
