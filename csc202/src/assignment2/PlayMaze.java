@@ -140,11 +140,14 @@ public class PlayMaze {
 		}
 		else {
 			System.out.println("Map filename must be provided");
+			System.out.println("Usage: java -jar PlayMaze.jar <filename> <r> <width> <height>");
+			System.out.println("Optional: Use 'r' without quotes to reverse 1/0's.");
+			System.out.println("Optional: Supply integer greater than 2 for both width and height");
 			System.exit(1);
 		}
 		
 		// Reverse role of 1/0's.
-		if (args.length == 2) {
+		if (args.length >= 2) {
 			if (args[1].equals("r")) {
 			System.out.println("Wall/Path switch activated");
 			WALL = "1";
@@ -154,7 +157,7 @@ public class PlayMaze {
 		
 		// Change Dimensions from standard 10x10
 		if (args.length == 4) {
-			System.out.println("Setting New Dimensions:");
+			System.out.println("Setting New Dimensions.");
 			try {
 				MAZE_WIDTH = Integer.parseInt(args[2]);
 				MAZE_HEIGHT = Integer.parseInt(args[3]);
@@ -163,7 +166,11 @@ public class PlayMaze {
 				}
 			}
 			catch (Exception e) {
-				System.out.print("Arguments 3 and 4 must be integers greater than 2");
+				System.out.println("Arguments 3 and 4 must be integers greater than 2");
+				System.out.println("Usage: java -jar PlayMaze.jar <filename> <r> <width> <height>");
+				System.out.println("Optional: Use 'r' without quotes to reverse 1/0's.");
+				System.out.println("Optional: Supply integer greater than 2 for both width and height");
+				System.exit(1);
 			}
 		}
 		if (args.length ==  3) {
@@ -176,7 +183,10 @@ public class PlayMaze {
 				}
 			}
 			catch (Exception e) {
-				System.out.print("Arguments 2 and 3 must be integers greater than 2");
+				System.out.println("Arguments 2 and 3 must be integers greater than 2");
+				System.out.println("Usage: java -jar PlayMaze.jar <filename> <r> <width> <height>");
+				System.out.println("Optional: Use 'r' without quotes to reverse 1/0's.");
+				System.out.println("Optional: Supply integer greater than 2 for both width and height");
 				System.exit(1);
 			}
 		}

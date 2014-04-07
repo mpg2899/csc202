@@ -1,5 +1,5 @@
 package assignment2;
-
+// This is a simple Java object that will store basic maze information for each new path discovered.
 public class MazePath {
 
 	public int x,y; 
