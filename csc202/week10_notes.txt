@@ -1,0 +1,6 @@
+BST's:
+Preorder traversal:  Visit root, visit left, visit right.
+
+Inorder traversal:  Visit left, visit root, visit right.
+
+Postorder traversal:  Visit left, visit right, visit parent.

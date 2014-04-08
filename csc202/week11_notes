@@ -1,0 +1,48 @@
+R- Rotation
+
+When to use:
+  New node is in the l.s.t. of the left child (B)
+  of the nearest ancestor (A) with b.f. of +2
+  
+What to do:
+  Set A's parent to B.
+  Set A's left to B's right.
+  Set B's right to A.
+  
+  L- Rotation
+  
+  When to use:
+    New node in the r.s.t of the right child (B)
+    of the nearest ancestor (A) with b.f. of -2
+    
+  What to do:
+    Set A's parent to B.
+    Set A's right to B's left.
+    Set B's left to A.
+    
+  L-R- Rotation
+  
+  When to use:
+    New node is in the r.s.t of the left child (B)
+    of the nearest ancestor (A) with b.f. of +2
+    C is B's affected child.
+    
+  What to do:
+    Set B's right to C's left.
+    Set C's left to B.
+    Set A's parent to C
+    Set A's left to C's right.
+    Set C's right to A.
+    
+  R-L Rotation:
+  When to use:
+    New node in the l.s.t. of the right child (B)
+    of the nearest ancestor (A) with b.f. of -2
+    C is B's affected child.
+    
+  What to do:
+    Set B's left to C's right.
+    Set C's right to B.
+    Set A's parent to C.
+    Set A's right to C's left.
+    Set C's left to A.  
