@@ -1,0 +1,18 @@
+Assignment 3z
+
+Things to do:
+Modify the class BinarySearchTree (ch8)
+
+to rewrite the following functions:
+recContains()
+recGet()
+recAdd()
+inOrder()
+preOrder()
+postOrder()
+
+as non-recursive functions
+
+Test using ITDBinarySearchTree.java
+
+Turn in every *.java files (including your own classes added)
