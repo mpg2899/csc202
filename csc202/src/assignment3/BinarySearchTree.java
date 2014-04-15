@@ -422,6 +422,7 @@ public class BinarySearchTree<T extends Comparable<T>>
 	    int mypopped = 0;
 	    int written = 0;
 	    int fromright = 0;
+	    String badString = null;
 	    if (myTree != null) {
 	    	int isempty = 0;
 	    	while (isempty == 0) {
@@ -463,6 +464,7 @@ public class BinarySearchTree<T extends Comparable<T>>
 		    					if (myTree == ((BSTNode<T>) myStack.top()).getRight()) {
 		    						fromright = 0;
 		    					}
+
 	            				myTree = (BSTNode<T>) myStack.top();
 	            				myStack.pop();
 	        				}
@@ -496,10 +498,12 @@ public class BinarySearchTree<T extends Comparable<T>>
     				}
 	    			else if (myTree.getRight() != null) {
 	    				System.out.println("Going Right 2");
+
 	    				myStack.push(myTree);
 	    				fromright = 1;
 	    				written = 0;
 	    				mypopped = 0;
+
 	    				myTree = myTree.getRight();
 	    			} 
 	    		}
