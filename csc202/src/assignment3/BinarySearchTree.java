@@ -422,7 +422,6 @@ public class BinarySearchTree<T extends Comparable<T>>
 	    int mypopped = 0;
 	    int written = 0;
 	    int fromright = 0;
-	    String badString = null;
 	    if (myTree != null) {
 	    	int isempty = 0;
 	    	while (isempty == 0) {
@@ -433,80 +432,63 @@ public class BinarySearchTree<T extends Comparable<T>>
 	    			preOrderQueue.enqueue(myTree.getInfo());
 	    			System.out.println("queuing " + myTree.getInfo());
 	    			written = 1;
+	    			myStack.push(myTree);
 	    			
 	    		}
-	    	    if (written == 1 && mypopped == 0) {
-	    			if (myTree.getLeft() != null) {
+	    		// We have written the current tree node to stack and queue.
+	    	    if (written == 1) {
+	    	    	// Never go left after popping.
+	    			if (myTree.getLeft() != null  && mypopped == 0) {
 	    				System.out.println("Going left");
-	    				myStack.push(myTree);
-	    				fromright = 0;
+	    				//myStack.push(myTree);
 	    				written = 0;
 	    				myTree = myTree.getLeft();
 	    			}
+	    			// Since we couldn't go left, let's go right.
 	    			else if (myTree.getRight() != null) {
 	    				System.out.println("Going Right");
-	    				myStack.push(myTree);
-	    				fromright = 1;
+	    				//myStack.push(myTree);
+	    				fromright++;
 	    				written = 0;
 	    				myTree = myTree.getRight();
+	    				mypopped = 0;
 	    			}
-	    			else if (!myStack.isEmpty()) {
-	    				// From right?
-	    				//myStack.pop();
-	    				System.out.println("Couldn't go left or right");
-	    				
-	    				if (fromright == 1) {
-	    					System.out.println("Appears to be from right.");
-		    				mypopped = 1;
-		    				fromright = 1;
-		    				if (myStack.isEmpty() == false) {
-		    					// check for left-right switch.
-		    					if (myTree == ((BSTNode<T>) myStack.top()).getRight()) {
-		    						fromright = 0;
-		    					}
-
-	            				myTree = (BSTNode<T>) myStack.top();
-	            				myStack.pop();
+	    			// Pop back to a node where we haven't gone right yet.
+	    			else if (fromright >= 1) {
+	    				while (fromright >= 0) {
+	    					System.out.println("popping rights: " + fromright);
+	    					if (myStack.isEmpty() == false) {
+	    						myStack.pop();
+	        				}
+	    					if (myStack.isEmpty() == false) {
+	        					myTree = (BSTNode<T>) myStack.top();
 	        				}
 	    					else isempty = 1;
+	    					fromright--;
 	    				}
-	    				else {
-		    				//myStack.pop();
-		    				mypopped = 1;
-		    				fromright = 0;
-		    				if (myStack.isEmpty() == false) {
-	            				myTree = (BSTNode<T>) myStack.top();
-	            				myStack.pop();
-	        				}
-	    					else isempty = 1;
-	    				}
-	    				
-
+	    				fromright = 0;
+	    				mypopped = 1;
+	    			}
+	    			// We already went left and/or right, but now must pop again.
+	    			else if (mypopped == 1) {
+	    				myStack.pop();
+	    				if (myStack.isEmpty() == false) {
+        					myTree = (BSTNode<T>) myStack.top();
+        				}
+    					else isempty = 1;
+	    			}
+	    			// We are at a leaf node, let's pop back up a level.
+	    			else if (mypopped == 0) {
+	    				mypopped = 1;
+	    				myStack.pop();
+	    				if (myStack.isEmpty() == false) {
+        					myTree = (BSTNode<T>) myStack.top();
+        				}
+    					else isempty = 1;
 	    			}
 	    			else isempty = 1;
 	    		}
-	    		else if (mypopped == 1 && myStack.isEmpty() == false) {
-	    			// From the right or already written?
-    				if (fromright == 1) {
-	    				myStack.pop();
-	    				mypopped = 1;
-	    				fromright = 1;
-	    				if (myStack.isEmpty() == false) {
-            				myTree = (BSTNode<T>) myStack.top();
-        				}
-    					else isempty = 1;
-    				}
-	    			else if (myTree.getRight() != null) {
-	    				System.out.println("Going Right 2");
 
-	    				myStack.push(myTree);
-	    				fromright = 1;
-	    				written = 0;
-	    				mypopped = 0;
-
-	    				myTree = myTree.getRight();
-	    			} 
-	    		}
 	    		else isempty = 1;
 	       }
 	    }
