@@ -328,12 +328,7 @@ public class BinarySearchTree<T extends Comparable<T>>
   private void inOrder(BSTNode<T> tree)
   // Initializes inOrderQueue with tree elements in inOrder order.
   {
-    if (tree != null)
-    {
-      inOrder(tree.getLeft());
-      inOrderQueue.enqueue(tree.getInfo());
-      inOrder(tree.getRight());
-    }
+
     BSTNode<T> myTree = tree;
     LinkedStack myStack = new LinkedStack<LLNode<BSTNode<T>>>();
     int mypopped = 0;
@@ -413,7 +408,107 @@ public class BinarySearchTree<T extends Comparable<T>>
       preOrder(tree.getLeft());
       preOrder(tree.getRight());
     }
+    
+    
   }
+  private void preOrder2(BSTNode<T> tree)
+  // Initializes preOrderQueue with tree elements in preOrder order.
+  {
+	  // queue tree.
+	  // go left.
+	  // go right.
+	    BSTNode<T> myTree = tree;
+	    LinkedStack myStack = new LinkedStack<LLNode<BSTNode<T>>>();
+	    int mypopped = 0;
+	    int written = 0;
+	    int fromright = 0;
+	    if (myTree != null) {
+	    	int isempty = 0;
+	    	while (isempty == 0) {
+	    		System.out.println(myTree.getInfo());
+	    		// Haven't written, haven't popped.
+	    		if (written == 0 && mypopped == 0) {
+	    			//myStack.push(myTree);
+	    			preOrderQueue.enqueue(myTree.getInfo());
+	    			System.out.println("queuing " + myTree.getInfo());
+	    			written = 1;
+	    			
+	    		}
+	    	    if (written == 1 && mypopped == 0) {
+	    			if (myTree.getLeft() != null) {
+	    				System.out.println("Going left");
+	    				myStack.push(myTree);
+	    				fromright = 0;
+	    				written = 0;
+	    				myTree = myTree.getLeft();
+	    			}
+	    			else if (myTree.getRight() != null) {
+	    				System.out.println("Going Right");
+	    				myStack.push(myTree);
+	    				fromright = 1;
+	    				written = 0;
+	    				myTree = myTree.getRight();
+	    			}
+	    			else if (!myStack.isEmpty()) {
+	    				// From right?
+	    				//myStack.pop();
+	    				System.out.println("Couldn't go left or right");
+	    				
+	    				if (fromright == 1) {
+	    					System.out.println("Appears to be from right.");
+		    				mypopped = 1;
+		    				fromright = 1;
+		    				if (myStack.isEmpty() == false) {
+		    					// check for left-right switch.
+		    					if (myTree == ((BSTNode<T>) myStack.top()).getRight()) {
+		    						fromright = 0;
+		    					}
+	            				myTree = (BSTNode<T>) myStack.top();
+	            				myStack.pop();
+	        				}
+	    					else isempty = 1;
+	    				}
+	    				else {
+		    				//myStack.pop();
+		    				mypopped = 1;
+		    				fromright = 0;
+		    				if (myStack.isEmpty() == false) {
+	            				myTree = (BSTNode<T>) myStack.top();
+	            				myStack.pop();
+	        				}
+	    					else isempty = 1;
+	    				}
+	    				
+
+	    			}
+	    			else isempty = 1;
+	    		}
+	    		else if (mypopped == 1 && myStack.isEmpty() == false) {
+	    			// From the right or already written?
+    				if (fromright == 1) {
+	    				myStack.pop();
+	    				mypopped = 1;
+	    				fromright = 1;
+	    				if (myStack.isEmpty() == false) {
+            				myTree = (BSTNode<T>) myStack.top();
+        				}
+    					else isempty = 1;
+    				}
+	    			else if (myTree.getRight() != null) {
+	    				System.out.println("Going Right 2");
+	    				myStack.push(myTree);
+	    				fromright = 1;
+	    				written = 0;
+	    				mypopped = 0;
+	    				myTree = myTree.getRight();
+	    			} 
+	    		}
+	    		else isempty = 1;
+	       }
+	    }
+    
+  }
+
 
   private void postOrder(BSTNode<T> tree)
   // Initializes postOrderQueue with tree elements in postOrder order.
@@ -441,7 +536,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     if (orderType == PREORDER)
     {
       preOrderQueue = new LinkedUnbndQueue<T>();
-      preOrder(root);
+      preOrder2(root);
     }
     if (orderType == POSTORDER)
     {
