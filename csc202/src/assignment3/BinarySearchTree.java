@@ -73,21 +73,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     }
     return count;
   }
-/* Old code
-  private boolean recContains(T element, BSTNode<T> tree)
-  // Returns true if tree contains an element e such that 
-  // e.compareTo(element) == 0; otherwise, returns false.
-  {
-    if (tree == null)
-      return false;       // element is not found
-    else if (element.compareTo(tree.getInfo()) < 0)
-      return recContains(element, tree.getLeft());   // Search left subtree
-    else if (element.compareTo(tree.getInfo()) > 0)
-      return recContains(element, tree.getRight());  // Search right subtree
-    else
-      return true;        // element is found
-  }
-  */
+
   
   // Non recursive function.
   private boolean recContains(T element, BSTNode<T> tree) {
@@ -135,23 +121,6 @@ public class BinarySearchTree<T extends Comparable<T>>
     return recContains(element, root);
   }
   
-
-  /* old function
-  private T recGet(T element, BSTNode<T> tree)
-  // Returns an element e from tree such that e.compareTo(element) == 0;
-  // if no such element exists, returns null.
-  {
-    if (tree == null)
-      return null;             // element is not found
-    else if (element.compareTo(tree.getInfo()) < 0)
-      return recGet(element, tree.getLeft());          // get from left subtree
-    else
-    if (element.compareTo(tree.getInfo()) > 0)
-      return recGet(element, tree.getRight());         // get from right subtree
-    else
-      return tree.getInfo();  // element is found
-  }
-  */
   
   // Non recursive function.
   private T recGet(T element, BSTNode<T> tree)
@@ -195,20 +164,6 @@ public class BinarySearchTree<T extends Comparable<T>>
   }
   
 
-/* Old Function
-  private BSTNode<T> recAdd(T element, BSTNode<T> tree)
-  // Adds element to tree; tree retains its BST property.
-  {
-    if (tree == null)
-      // Addition place found
-      tree = new BSTNode<T>(element);
-    else if (element.compareTo(tree.getInfo()) <= 0)
-      tree.setLeft(recAdd(element, tree.getLeft()));    // Add in left subtree
-    else
-      tree.setRight(recAdd(element, tree.getRight()));   // Add in right subtree
-    return tree;
-  }
-  */
   
  // Non Recursive Function
   private BSTNode<T> recAdd(T element, BSTNode<T> tree)
@@ -311,18 +266,6 @@ public class BinarySearchTree<T extends Comparable<T>>
     return found;
   }
 
-  /* Old Function
-  private void inOrder(BSTNode<T> tree)
-  // Initializes inOrderQueue with tree elements in inOrder order.
-  {
-    if (tree != null)
-    {
-      inOrder(tree.getLeft());
-      inOrderQueue.enqueue(tree.getInfo());
-      inOrder(tree.getRight());
-    }
-  }
-  */
   
   // Non recursive function
   private void inOrder(BSTNode<T> tree)
@@ -398,20 +341,9 @@ public class BinarySearchTree<T extends Comparable<T>>
     }
 
   }
-
+  
+  // Non Recursive Function.
   private void preOrder(BSTNode<T> tree)
-  // Initializes preOrderQueue with tree elements in preOrder order.
-  {
-    if (tree != null)
-    {
-      preOrderQueue.enqueue(tree.getInfo());
-      preOrder(tree.getLeft());
-      preOrder(tree.getRight());
-    }
-    
-    
-  }
-  private void preOrder2(BSTNode<T> tree)
   // Initializes preOrderQueue with tree elements in preOrder order.
   {
 	  // queue tree.
@@ -507,6 +439,14 @@ public class BinarySearchTree<T extends Comparable<T>>
     }
   }
 
+  private void postOrder2(BSTNode<T> tree)
+  // Initializes postOrderQueue with tree elements in postOrder order.
+  {
+    if (tree != null)
+    {
+
+    }
+  }
   public int reset(int orderType)
   // Initializes current position for an iteration through this BST
   // in orderType order. Returns current number of nodes in the BST.
@@ -522,7 +462,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     if (orderType == PREORDER)
     {
       preOrderQueue = new LinkedUnbndQueue<T>();
-      preOrder2(root);
+      preOrder(root);
     }
     if (orderType == POSTORDER)
     {
