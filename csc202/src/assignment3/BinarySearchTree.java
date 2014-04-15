@@ -6,6 +6,8 @@
 
 package assignment3;
 
+import assignment2.LLNode;
+import assignment2.MazePath;
 import assignment3.queues.*;
 import assignment3.stacks.*;
 import support.BSTNode;      
@@ -71,7 +73,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     }
     return count;
   }
-
+/* Old code
   private boolean recContains(T element, BSTNode<T> tree)
   // Returns true if tree contains an element e such that 
   // e.compareTo(element) == 0; otherwise, returns false.
@@ -85,6 +87,46 @@ public class BinarySearchTree<T extends Comparable<T>>
     else
       return true;        // element is found
   }
+  */
+  
+  // Non recursive function.
+  private boolean recContains(T element, BSTNode<T> tree) {
+	  if (tree == null)
+	      return false;       // element is not found
+	  LinkedStack myStack = new LinkedStack<LLNode<T>>();
+	  BSTNode<T> myTree = tree;
+	  
+	  int found = 0;
+	  int empty = 0;
+	  int waspopped = 0;
+	  while (empty == 0) {
+		  if (element.compareTo(myTree.getInfo()) < 0) {
+			  if (myTree.getLeft() != null) {
+				  //myStack.push(myTree);
+				  myTree = myTree.getLeft();
+				 // waspopped = 0;
+			  }
+			  //else if (!myStack.isEmpty()) {
+			  else {
+				  empty = 1;
+				  //myTree = (BSTNode<T>) myStack.top();
+				  //myStack.pop();
+				  //waspopped = 1;
+			  }
+		  }
+		  else if (element.compareTo(myTree.getInfo()) > 0) {
+			  if (myTree.getRight() != null) {
+				  //myStack.push(myTree);
+				  myTree = myTree.getRight();
+			  }
+			  else {
+				  empty = 1;
+			  }
+		  }
+		  else return true;
+	  }
+	  return false;
+  }
 
   public boolean contains (T element)
   // Returns true if this BST contains an element e such that 
@@ -93,6 +135,8 @@ public class BinarySearchTree<T extends Comparable<T>>
     return recContains(element, root);
   }
   
+
+  /* old function
   private T recGet(T element, BSTNode<T> tree)
   // Returns an element e from tree such that e.compareTo(element) == 0;
   // if no such element exists, returns null.
@@ -107,6 +151,41 @@ public class BinarySearchTree<T extends Comparable<T>>
     else
       return tree.getInfo();  // element is found
   }
+  */
+  
+  // Non recursive function.
+  private T recGet(T element, BSTNode<T> tree)
+  // Returns an element e from tree such that e.compareTo(element) == 0;
+  // if no such element exists, returns null.
+  {
+	  if (tree == null)
+	      return null;       // element is not found
+
+	  BSTNode<T> myTree = tree;
+	  int empty = 0;
+
+	  while (empty == 0) {
+		  if (element.compareTo(myTree.getInfo()) < 0) {
+			  if (myTree.getLeft() != null) {
+
+				  myTree = myTree.getLeft();
+			  }
+			  else {
+				  empty = 1;
+			  }
+		  }
+		  else if (element.compareTo(myTree.getInfo()) > 0) {
+			  if (myTree.getRight() != null) {
+				  myTree = myTree.getRight();
+			  }
+			  else {
+				  empty = 1;
+			  }
+		  }
+		  else return myTree.getInfo();
+	  }
+	  return null;
+  }
 
   public T get(T element)
   // Returns an element e from this BST such that e.compareTo(element) == 0;
@@ -114,7 +193,9 @@ public class BinarySearchTree<T extends Comparable<T>>
   {
     return recGet(element, root);
   }
+  
 
+/* Old Function
   private BSTNode<T> recAdd(T element, BSTNode<T> tree)
   // Adds element to tree; tree retains its BST property.
   {
@@ -127,12 +208,51 @@ public class BinarySearchTree<T extends Comparable<T>>
       tree.setRight(recAdd(element, tree.getRight()));   // Add in right subtree
     return tree;
   }
+  */
+  
+ // Non Recursive Function
+  private BSTNode<T> recAdd(T element, BSTNode<T> tree)
+  // Adds element to tree; tree retains its BST property.
+  {
+	BSTNode<T> myTree = tree;
+	boolean inserted = false;
+    if (myTree == null) {
+      // Empty tree
+      tree = new BSTNode<T>(element);
+    }
+    else {
+    	
+    	while (inserted == false) {
+    		if (element.compareTo(myTree.getInfo()) <= 0) { //left
+    			if (myTree.getLeft() == null) { // no left leaf
+    				myTree.setLeft(new BSTNode<T>(element));
+    				inserted = true;
+    			}
+    			else { // existing left leaf
+    				myTree = myTree.getLeft();
+    			}
+    		}
+    		else { // right
+    			if (myTree.getRight() == null) { // no left leaf
+    				myTree.setRight(new BSTNode<T>(element));
+    				inserted = true;
+    			}
+    			else { // existing right leaf
+    				myTree = myTree.getRight();
+    			}
+    		}
+    	}
+    }
+
+    return tree;
+  }
 
   public void add (T element)
   // Adds element to this BST. The tree retains its BST property.
   {
     root = recAdd(element, root);
   }
+  
 
   private T getPredecessor(BSTNode<T> tree)
   // Returns the information held in the rightmost node in tree

@@ -75,7 +75,7 @@ public class ITDBinarySearchTree
         target = conIn.nextLine();
         System.out.println("contains(" + target + ") returns " + tree.contains(target));
         break;
-        
+
         case 5:  // remove
         System.out.print("Enter string to remove: ");
         target = conIn.nextLine();
@@ -87,12 +87,14 @@ public class ITDBinarySearchTree
         target = conIn.nextLine();
         System.out.println("get(" + target + ") returns " + tree.get(target));
         break;
+        
   
         case 7:  // add
         System.out.print("Enter string to add: ");
         element = conIn.nextLine();
         tree.add(element);
 		  break;
+		  
   
         case 8:  // print tree
         System.out.println("Choose a traversal order:");
