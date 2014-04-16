@@ -442,10 +442,76 @@ public class BinarySearchTree<T extends Comparable<T>>
   private void postOrder2(BSTNode<T> tree)
   // Initializes postOrderQueue with tree elements in postOrder order.
   {
-    if (tree != null)
-    {
-
-    }
+    	// go left
+    	// go right
+    	// write
+	    BSTNode<T> myTree = tree;
+	    LinkedStack myStack = new LinkedStack<LLNode<BSTNode<T>>>();
+	    LinkedStack dirStack = new LinkedStack<LLNode<Integer>>();
+	    int mypopped = 0;
+	    int written = 0;
+	    int popcontinue = 1;
+	    if (myTree != null) {
+	    	int isempty = 0;
+	    	while (isempty == 0) {
+    			if (myTree.getLeft() != null  && mypopped == 0) {
+    				System.out.println("Going left");
+    				myStack.push(myTree);
+    				myTree = myTree.getLeft();
+    				dirStack.push(1);
+    			}
+    			// Nothing on the left, let's go right.
+    			else if (myTree.getRight() != null) {
+    				System.out.println("Going right, node: " + myTree.getInfo());
+    				myStack.push(myTree);
+    				myTree = myTree.getRight();
+    				dirStack.push(0);
+    				// Allow going left again.
+    				mypopped = 0;
+    			}
+    			// Nothing on the right, let's write and pop.
+    			else {
+    				
+    				
+    				// If the most recent direction was 1
+    				// Then we must pop, and set mypopped to 1
+    				// to indicate we cannot go left.
+    				if (dirStack.isEmpty() == false) {
+    					if (dirStack.top() == (Integer)1) {
+    						postOrderQueue.enqueue(myTree.getInfo());
+    						mypopped = 1;
+    						dirStack.pop();
+    						myStack.pop();
+    						if (myStack.isEmpty() == false) {
+    							myTree = (BSTNode<T>) myStack.top();
+    						}
+    						else isempty = 1;
+    					}
+    					popcontinue = 1;
+    					while (!dirStack.isEmpty() && popcontinue == 1) {
+    						postOrderQueue.enqueue(myTree.getInfo());
+    						System.out.println("queuing: " + myTree.getInfo());
+    						if (dirStack.top() == (Integer)0) {
+    							mypopped = 1;
+    							dirStack.pop();
+    							myStack.pop();
+    							
+    							if (myStack.isEmpty() == false) {
+    								myTree = (BSTNode<T>) myStack.top();
+    								System.out.println("after pop: " + myTree.getInfo());
+    							}
+    							else isempty = 1;
+    						}
+    						else popcontinue = 0;
+    					
+    					}
+    				}
+    				else isempty = 1;
+    			 
+    			}
+	    	}
+	    }
+    
   }
   public int reset(int orderType)
   // Initializes current position for an iteration through this BST
@@ -467,7 +533,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     if (orderType == POSTORDER)
     {
       postOrderQueue = new LinkedUnbndQueue<T>();
-      postOrder(root);
+      postOrder2(root);
     }
     return numNodes;
   }
