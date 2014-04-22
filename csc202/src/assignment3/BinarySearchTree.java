@@ -267,7 +267,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     return found;
   }
 
-  
+
   // Non recursive function
   private void inOrder(BSTNode<T> tree)
   // Initializes inOrderQueue with tree elements in inOrder order.
@@ -342,105 +342,83 @@ public class BinarySearchTree<T extends Comparable<T>>
     }
 
   }
-  
   // Non Recursive Function.
-  private void preOrder(BSTNode<T> tree)
-  // Initializes preOrderQueue with tree elements in preOrder order.
-  {
-	  // queue tree.
-	  // go left.
-	  // go right.
+  private void preOrder(BSTNode<T> tree) {
 	    BSTNode<T> myTree = tree;
 	    LinkedStack myStack = new LinkedStack<LLNode<BSTNode<T>>>();
-	    int mypopped = 0;
-	    int written = 0;
-	    int fromright = 0;
-	    if (myTree != null) {
-	    	int isempty = 0;
-	    	while (isempty == 0) {
-	    		System.out.println(myTree.getInfo());
-	    		// Haven't written, haven't popped.
-	    		if (written == 0 && mypopped == 0) {
-	    			//myStack.push(myTree);
-	    			preOrderQueue.enqueue(myTree.getInfo());
-	    			System.out.println("queuing " + myTree.getInfo());
-	    			written = 1;
-	    			myStack.push(myTree);
-	    			
+	    boolean isempty = false;
+	    boolean popped = false;
+	    if (myTree == null) isempty = true;
+	    String lastWrite = null;
+	    String currentValue = null;
+	    while (!isempty) {
+	    	
+	    	// if not popped
+	    	if (!popped) {
+	    		preOrderQueue.enqueue(myTree.getInfo());
+	    		lastWrite = (String) myTree.getInfo();
+	    		// go left
+		    	if (myTree.getLeft() != null) {
+		    		myStack.push(myTree);
+		    		myTree = myTree.getLeft();
+		    	}
+	    		// go right
+		    	else if (myTree.getRight() != null) {
+		    		myStack.push(myTree);
+		    		myTree = myTree.getRight();
+		    	}
+		    	else {
+		    		if (myStack.isEmpty()) {
+		    			isempty = true;
+		    		}
+		    		else {
+		    			myTree = (BSTNode<T>) myStack.top();
+		    			myStack.pop();
+		    			popped = true;
+		    		}
+		    	}
+	    	}
+	      if (popped) {
+  			currentValue = (String) myTree.getInfo();
+  			if (lastWrite.compareTo(currentValue) < 0) {
+  				if (myTree.getRight() != null) {
+		    		myStack.push(myTree);
+		    		myTree = myTree.getRight();
+		    		popped = false;
 	    		}
-	    		// We have written the current tree node to stack and queue.
-	    	    if (written == 1) {
-	    	    	// Never go left after popping.
-	    			if (myTree.getLeft() != null  && mypopped == 0) {
-	    				System.out.println("Going left");
-	    				//myStack.push(myTree);
-	    				written = 0;
-	    				myTree = myTree.getLeft();
-	    			}
-	    			// Since we couldn't go left, let's go right.
-	    			else if (myTree.getRight() != null) {
-	    				System.out.println("Going Right");
-	    				//myStack.push(myTree);
-	    				fromright++;
-	    				written = 0;
-	    				myTree = myTree.getRight();
-	    				mypopped = 0;
-	    			}
-	    			// Pop back to a node where we haven't gone right yet.
-	    			else if (fromright >= 1) {
-	    				while (fromright >= 0) {
-	    					System.out.println("popping rights: " + fromright);
-	    					if (myStack.isEmpty() == false) {
-	    						myStack.pop();
-	        				}
-	    					if (myStack.isEmpty() == false) {
-	        					myTree = (BSTNode<T>) myStack.top();
-	        				}
-	    					else isempty = 1;
-	    					fromright--;
-	    				}
-	    				fromright = 0;
-	    				mypopped = 1;
-	    			}
-	    			// We already went left and/or right, but now must pop again.
-	    			else if (mypopped == 1) {
-	    				myStack.pop();
-	    				if (myStack.isEmpty() == false) {
-        					myTree = (BSTNode<T>) myStack.top();
-        				}
-    					else isempty = 1;
-	    			}
-	    			// We are at a leaf node, let's pop back up a level.
-	    			else if (mypopped == 0) {
-	    				mypopped = 1;
-	    				myStack.pop();
-	    				if (myStack.isEmpty() == false) {
-        					myTree = (BSTNode<T>) myStack.top();
-        				}
-    					else isempty = 1;
-	    			}
-	    			else isempty = 1;
+	    		else {
+		    		if (myStack.isEmpty()) {
+		    			isempty = true;
+		    		}
+		    		else {
+		    			myTree = (BSTNode<T>) myStack.top();
+		    			myStack.pop();
+		    			popped = true;
+		    		}
 	    		}
+  			}
+  			else if (lastWrite.compareTo(currentValue) > 0) {
+	    		if (myStack.isEmpty()) {
+	    			isempty = true;
+	    		}
+	    		else {
+	    			myTree = (BSTNode<T>) myStack.top();
+	    			myStack.pop();
+	    			popped = true;
+	    		}
+  			}
+	      }
 
-	    		else isempty = 1;
-	       }
 	    }
-    
+	    
   }
+  
+  // Non Recursive Function.
+  
+
 
 
   private void postOrder(BSTNode<T> tree)
-  // Initializes postOrderQueue with tree elements in postOrder order.
-  {
-    if (tree != null)
-    {
-      postOrder(tree.getLeft());
-      postOrder(tree.getRight());
-      postOrderQueue.enqueue(tree.getInfo());
-    }
-  }
-
-  private void postOrder2(BSTNode<T> tree)
   // Initializes postOrderQueue with tree elements in postOrder order.
   {
     	// go left
@@ -491,6 +469,7 @@ public class BinarySearchTree<T extends Comparable<T>>
 	
 			    				myTree = (BSTNode<T>) myStack.top();
 			    				myStack.pop();
+			    				System.out.println("Popping, Tree is now " + (String) myTree.getInfo());
 		    			}
 		    		}
 	    			
@@ -567,7 +546,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     if (orderType == POSTORDER)
     {
       postOrderQueue = new LinkedUnbndQueue<T>();
-      postOrder2(root);
+      postOrder(root);
     }
     return numNodes;
   }
