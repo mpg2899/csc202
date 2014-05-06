@@ -1,3 +1,6 @@
+// Michael Gugino
+// CSC202
+// Main File to run program.
 package assignment4;
 
 import java.io.BufferedReader;
@@ -6,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class RecordSort {
 	 // Create an array of employee records
@@ -40,6 +44,9 @@ public class RecordSort {
 			case 3: Arrays.sort(recordArray, EmployeeRecord.SalaryComparator);
 				break;
 			case 4: Arrays.sort(recordArray, EmployeeRecord.ZipComparator);
+				break;
+			default: System.out.println("Invalid sort column, exiting");
+				System.exit(1);
 				break;
 		}
 		
@@ -172,11 +179,19 @@ public class RecordSort {
 		// TODO Auto-generated method stub
 		
 		// Read input file name, get sort column
+		System.out.println("Enter the file name you wish to sort");
+		Scanner keyboard = new Scanner(System.in);
+		String inputFile = keyboard.next();
 		
+		System.out.println("Enter the column you wish to sort by:");
+		for (int i = 0; i< columnNames.length; i++) {
+			System.out.println("To sort by " + columnNames[i] + " enter: " + i);
+		}
+		int sortByColumn = keyboard.nextInt();
 		// Read the file, sort, and write temp files.
 		recordArray = new EmployeeRecord[10];
-		int sortByColumn = 3;
-		readMainFile("inputfile.txt", sortByColumn);
+		
+		readMainFile(inputFile, sortByColumn);
 		// Merge the sorted temp files.
 		String f1 = tempFileTemplate + "0.txt";
 		String f2 = tempFileTemplate + "1.txt";

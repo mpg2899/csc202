@@ -1,3 +1,5 @@
+// Michael Gugino
+// CSC 202
 // This class defines and object type which holds data about employee records.
 
 package assignment4;
