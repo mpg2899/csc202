@@ -2,7 +2,9 @@
 
 package assignment4;
 
-public class EmployeeRecord {
+import java.util.Comparator;
+
+public class EmployeeRecord implements Comparable<EmployeeRecord>{
 	// Define some attributes.
 	String lastName, firstName;
 	int employeeNumber;
@@ -22,4 +24,42 @@ public class EmployeeRecord {
 	public String recordOut() {
 		return lastName + "," + firstName + "," + employeeNumber + "," + salary + "," + zipcode + "\n";
 	}
+	
+	// Sort by last name by default.
+	public int compareTo(EmployeeRecord compareRecord) {
+		String recordName1 = this.lastName;
+		String recordName2 = compareRecord.lastName;
+
+		//ascending order
+		return recordName1.compareTo(recordName2);
+	}
+	
+	public static Comparator<EmployeeRecord> LastNameComparator 
+    = new Comparator<EmployeeRecord>() {
+
+		public int compare(EmployeeRecord record1, EmployeeRecord record2) {
+
+			String recordName1 = record1.lastName;
+			String recordName2 = record2.lastName;
+
+			//ascending order
+			return recordName1.compareTo(recordName2);
+
+		}
+
+	};
+	
+	public static Comparator<EmployeeRecord> FirstNameComparator 
+    = new Comparator<EmployeeRecord>() {
+
+		public int compare(EmployeeRecord record1, EmployeeRecord record2) {
+
+			String recordName1 = record1.firstName;
+			String recordName2 = record2.firstName;
+
+			//ascending order
+			return recordName1.compareTo(recordName2);
+		}
+
+	};
 }

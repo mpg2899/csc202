@@ -21,7 +21,7 @@ public class CreateTestData {
 		 int count = 0;
 		recordArray = new EmployeeRecord[101];
 		for (int i = 0; i<101; i++) {
-			recordArray[i] = new EmployeeRecord("Smith" + i, "Joe", i, (float)i*50, 22193+i);
+			recordArray[i] = new EmployeeRecord("Smith" + (int)(Math.random()*100), "Joe", i, (float)i*50, 22193+i);
 		}
 		try {
 			bw = new BufferedWriter(new FileWriter("inputfile.txt"));
