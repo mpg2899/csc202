@@ -31,18 +31,18 @@ public class RecordSort {
 	public static EmployeeRecord[] sortArray(EmployeeRecord[] recordArray, int sortColumn) {
 		
 		switch (sortColumn) {
-			case 0:
+			case 0: Arrays.sort(recordArray);
 				break;
-			case 1:
+			case 1: Arrays.sort(recordArray, EmployeeRecord.FirstNameComparator);
 				break;
-			case 2:
+			case 2: Arrays.sort(recordArray, EmployeeRecord.IDComparator);
 				break;
-			case 3:
+			case 3: Arrays.sort(recordArray, EmployeeRecord.SalaryComparator);
 				break;
-			case 4:
+			case 4: Arrays.sort(recordArray, EmployeeRecord.ZipComparator);
 				break;
 		}
-		Arrays.sort(recordArray);
+		
 
 		return recordArray;
 		
@@ -175,14 +175,15 @@ public class RecordSort {
 		
 		// Read the file, sort, and write temp files.
 		recordArray = new EmployeeRecord[10];
-		readMainFile("inputfile.txt", 0);
+		int sortByColumn = 3;
+		readMainFile("inputfile.txt", sortByColumn);
 		// Merge the sorted temp files.
 		String f1 = tempFileTemplate + "0.txt";
 		String f2 = tempFileTemplate + "1.txt";
 		String outfile = tempFileTemplate + "_result" + "0.txt";
 		
 		for (int i = 0; i<fileCount-1; i++) {
-			mergeFiles(f1, f2, outfile, 0);
+			mergeFiles(f1, f2, outfile, sortByColumn);
 			f1 = outfile.toString();
 			f2 = tempFileTemplate + (i + 2) + ".txt";
 			outfile = tempFileTemplate + "_result" + (i+1) + ".txt";

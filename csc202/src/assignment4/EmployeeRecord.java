@@ -62,4 +62,46 @@ public class EmployeeRecord implements Comparable<EmployeeRecord>{
 		}
 
 	};
+	
+	public static Comparator<EmployeeRecord> IDComparator 
+    = new Comparator<EmployeeRecord>() {
+
+		public int compare(EmployeeRecord record1, EmployeeRecord record2) {
+
+			int id1 = record1.employeeNumber;
+			int id2 = record2.employeeNumber;
+
+			//ascending order
+			return id1 - id2;
+		}
+
+	};
+	
+	public static Comparator<EmployeeRecord> SalaryComparator 
+    = new Comparator<EmployeeRecord>() {
+
+		public int compare(EmployeeRecord record1, EmployeeRecord record2) {
+
+			float salary1 = record1.salary;
+			float salary2 = record2.salary;
+
+			//ascending order
+			return (int)(salary1 - salary2);
+		}
+
+	};
+	
+	public static Comparator<EmployeeRecord> ZipComparator 
+    = new Comparator<EmployeeRecord>() {
+
+		public int compare(EmployeeRecord record1, EmployeeRecord record2) {
+
+			int zip1 = record1.zipcode;
+			int zip2 = record2.zipcode;
+
+			//ascending order
+			return zip1 - zip2;
+		}
+
+	};
 }
