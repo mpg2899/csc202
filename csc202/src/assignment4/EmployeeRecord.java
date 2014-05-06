@@ -20,6 +20,6 @@ public class EmployeeRecord {
 	
 	// Easy method to print out object to CSV.
 	public String recordOut() {
-		return lastName + "," + firstName + "," + employeeNumber + "," + salary + "," + zipcode;
+		return lastName + "," + firstName + "," + employeeNumber + "," + salary + "," + zipcode + "\n";
 	}
 }
