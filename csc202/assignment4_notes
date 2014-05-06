@@ -1,0 +1,18 @@
+Write a program to sort a very large number of records.
+
+csv.
+
+string lastName, firstName
+int employeeNumber;
+float salary;
+int zipcode;
+
+The program must prompt users for input of filename and inform users of the output filename.
+Allow users to sort the employee record using any field
+
+Requirements:
+No Java Collection
+No LinkedList structure
+No recursive function
+Arrays used cannot exceed size 10
+You must use the external sorting algorithm discussed in class.
